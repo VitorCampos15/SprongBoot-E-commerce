@@ -25,7 +25,7 @@ public class ProdutoService {
     public Optional<Produto> buscarProdutoPorId(Long id) {
         return produtoRepository.findById(id);
     }
-
+    //verificar funçao Update
     public Produto atualizarProduto(Long id, Produto produtoAtualizado) {
         Produto produtoExistente = produtoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));

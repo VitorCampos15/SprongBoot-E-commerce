@@ -4,30 +4,28 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "produto")
+@Table(name = "pedido")
 @Data // Gera automaticamente getters, setters, toString e equals/hashCode
-public class Produto {
+public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 100)
-    private String nome;
-
-    @Column(nullable = false, length = 100)
-    private String descricao;
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", nullable = false) // Define a chave estrangeira no banco
+    private Usuario usuario;
 
     @Column(nullable = false)
-    private float preco;
+    private LocalDate dataPedido;
 
     @Column(nullable = false)
-    private int estoque;
+    private float valorTotal;
 
-    @OneToMany(mappedBy = "produto")
-    @JsonIgnore
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItemPedido> itemPedidos;
 
 }
